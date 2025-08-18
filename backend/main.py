@@ -4,6 +4,10 @@ import random
 app = Flask(__name__)
 counter = 0
 
+@app.route('/health')
+def health():
+    return jsonify(status="ok"), 200
+
 
 @app.route('/metrics')
 def metrics():
