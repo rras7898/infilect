@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: metrics-app
+  labels:
+    app: metrics-app
+    component: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics-app
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: metrics-app
+        component: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: rrqs12/infilect-frontend:b8d3c2ad5a1a4ef3372cfa8489f0f22b6c89bab0
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10

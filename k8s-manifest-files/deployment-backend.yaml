@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: metrics-app
+  labels:
+    app: metrics-app
+    component: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics-app
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: metrics-app
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: rrqs12/infilect-backend:b8d3c2ad5a1a4ef3372cfa8489f0f22b6c89bab0
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
