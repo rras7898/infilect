@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: rrqs12/infilect-frontend:b8d3c2ad5a1a4ef3372cfa8489f0f22b6c89bab0
+          image: rrqs12/infilect-frontend:a4b1d2a15bd487d30f67c2748a9dde83e729a943
           ports:
             - containerPort: 80
           resources:
